@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlayerMovement : MonoBehaviour
 {
-
     public float speed = 10.0f;
     public PlayerController controller;
 
