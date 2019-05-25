@@ -1,50 +1,44 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-   [Range(0, .3f)] 
-   [SerializeField] 
-   private float m_MovementSmoothing = .05f;
+   [Range(0, .3f), SerializeField] 
+   private float _movementSmoothing = .05f;
 
-   private Rigidbody2D m_Rigidbody2D;
-   private bool m_FacingRight = true;
-   private Vector3 m_Velocity = Vector3.zero;
+   private Rigidbody2D _rigidbody2D;
+   private bool _facingRight = true;
+   private Vector3 _velocity = Vector3.zero;
 
    private void Awake()
    {
-      m_Rigidbody2D = GetComponent<Rigidbody2D>();
+      _rigidbody2D = GetComponent<Rigidbody2D>();
    }
 
    public void Move(float move)
    {
-
-      Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+      var rbVelocity = _rigidbody2D.velocity;
+      Vector3 targetVelocity = new Vector2(move * 10f, rbVelocity.y);
  
-      m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
-
- 
-      if (move > 0 && !m_FacingRight)
+      _rigidbody2D.velocity = Vector3.SmoothDamp(rbVelocity, targetVelocity, ref _velocity, _movementSmoothing);
+      
+      if (move > 0 && !_facingRight)
       {
          Flip();
-      } else if (move < 0 && m_FacingRight)
+      } else if (move < 0 && _facingRight)
       {
          Flip();
       }
-        
-        
    }
-
-
+   
    private void Flip()
    {
-      m_FacingRight = !m_FacingRight;
+      _facingRight = !_facingRight;
 
-      Vector3 theScale = transform.localScale;
+      var lTransform = transform;
+      var theScale = lTransform.localScale;
+      
       theScale.x *= -1;
-      transform.localScale = theScale;
+      lTransform.localScale = theScale;
    }
    
 }

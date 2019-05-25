@@ -6,15 +6,15 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 10.0f;
     public PlayerController controller;
 
-    private float translation = 0f;
+    private float _translation = 0f;
 
-    void Update()
+    private void Update()
     {
-        translation = Input.GetAxis("Horizontal") * speed;
+        _translation = Input.GetAxis("Horizontal") * speed;
     }
 
     private void FixedUpdate()
     {
-        controller.Move(translation * Time.deltaTime);
+        controller.Move(_translation * Time.deltaTime);
     }
 }
